@@ -16,7 +16,7 @@ class ChatConsumer(WebsocketConsumer):
 
         }))
         
-        # 메세지 보내고 1초 대기
+        # 메세지 보내고 0.1초 대기
         sleep(0.1)
 
 

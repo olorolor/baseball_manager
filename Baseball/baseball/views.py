@@ -1,19 +1,25 @@
 # -*- coding: utf-8 -*-
 
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, HttpResponseRedirect
 #TemplateView : URL 에 맞춰 해당 템츨릿 파일의 내용을 보여주는 뷰
 from django.views.generic.base import TemplateView
-
 # CreateView : 테이블의 레코드를 생성하기 위해 필요한 폼을 보여주고 폼의 입력을 받아 테이블의 래코드를 생성하는 뷰
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, FormView
 # UserCreationForm : User 모델의 객체를 생성하기 위해 보여주는 뷰. 장고에서 기본으로 제공해주는 뷰
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.views import LoginView, auth_login
+
 # from django.core.urlresolvers import reverse_lazy
 from django.urls import reverse_lazy    # 수정 2.0에서 변경
 from game.teamJang import *
 # from game.Baseball_sqlite import *
 
 from django.views.decorators.csrf import csrf_exempt
+
+
+class HomeView(FormView):
+    template_name = 'registration/login.html'
+    form_class = AuthenticationForm
 
 
 # 계정 생성 정의 / 사용자 만들때 템플릿 문서로 'registration.register.html'렌더링해서 사용
@@ -26,15 +32,13 @@ class UserCreateView(CreateView):
 
 # 'accounts/register/done'  URL을 처리해주는 뷰 정의 (사용자 생성후 보여줄 뷰)
 class UserCreateDoneTV(TemplateView):
-    template_name = 'registration/register_done.html'
+    # template_name = 'registration/register_done.html'
+    template_name = 'registration/login.html'
 
 
-class HomeView(TemplateView):
-    # inning = inning_proc()
-    # print('inning=' , inning)
-    template_name = 'game/game_former.html'
+class UserLoginView(LoginView):
 
-    def get_context_data(self, **kwargs):
-        rg = range(1,13)
-        context = {'rg':rg}
-        return context
+    def form_valid(self, form):
+        """Security check complete. Log the user in."""
+        auth_login(self.request, form.get_user())
+        return reverse_lazy('game')

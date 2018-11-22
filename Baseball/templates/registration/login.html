@@ -1,6 +1,5 @@
 {% extends "base.html" %}   <!--base.html 을 상속받으며 첫줄에 와야함 -->
 
-{% block title %}login.html{% endblock %}
 
 {% load staticfiles %}  <!-- 커스텀 태그를 사용하기 위해 staticfiles 모듈 로딩 -->
 {% block extrastyle %}{% static "css/forms.css" %}{% endblock %}
@@ -33,7 +32,7 @@
 
     <div class="submit-row">
 
-        <input it="sub" type="submit" value="LogIn" style="margin-bottom: 15px; font-weight:bold;" />
+        <input id="sub" type="submit" value="LogIn" style="margin-bottom: 15px; font-weight:bold;" />
         <input type="hidden" name="next" value="{{ next }}" />
 
     </div>

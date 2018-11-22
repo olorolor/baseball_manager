@@ -16,16 +16,16 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from .views import HomeView
-from .views import UserCreateView, UserCreateDoneTV
+from .views import UserCreateView, UserCreateDoneTV, UserLoginView
 from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
-    # 장고가 제공하는 인증과 url 형식 사용 / account 하위 주어줌 / 로그인인 경우 :8000/acounts/login/
+    # 장고가 제공하는 인증과 url 형식 사용 / account 하위 주어줌 / 로그인인 경우 :8000/accounts/login/
     path('accounts/register/', UserCreateView.as_view(), name='register'),  # 계정을 추가(생성)하는 뷰 URL
     path('accounts/register/done/', UserCreateDoneTV.as_view(), name='register_done'),  # 계정 생성이 완료되니 후 보여줄 뷰 URL
-    path('', include('game.urls')),
-    path('game/', include('game.urls')),
+    path('', HomeView.as_view(), name='login'),
+    path('game', include('game.urls'), name='game'),
 
 ]

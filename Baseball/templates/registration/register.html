@@ -12,7 +12,7 @@
 
     <h1 style="color:#225273;">New User Registration</h1>
                         <!-- action 이 . 이라면 현재경로를 의미 -->
-    <form method="post" action=".">{% csrf_token %} <!--다른 경로를 통해서 해킹 방지를 위해 필요/ post 형식에서 필요-->
+    <form method="post" action="{% url 'register_done' %}">{% csrf_token %} <!--다른 경로를 통해서 해킹 방지를 위해 필요/ post 형식에서 필요-->
 
         {% if form.errors %}
         <p class="errornote">Wrong! please correct the error(s) below.</p> <!-- 에러발견시 실행 -->
